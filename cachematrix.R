@@ -1,15 +1,33 @@
-## Put comments here that give an overall description of what your
-## functions do
+## First function sets value of matrix
+## second function acts as cache
 
-## Write a short comment describing this function
+## create matrix simillar to the numeric vector example
 
 makeCacheMatrix <- function(x = matrix()) {
-
+  inv <- NULL
+  setmat <- function(y){
+    x <<- y
+    inv <<- NULL
+  }
+  getmat <- function() x
+  setinv <- function (inverse) inv<-inverse 
+  getinv <- function () inv
+  list(setmat = setmat, getmat = getmat,
+       setinv = setinv,
+       getinv = getinv)
 }
 
 
-## Write a short comment describing this function
+## Check for existing cache, else compute inverse and set it in cache
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+  inv <- x$getinv
+  if(!is.null(inv)){
+    return(inv)
+  }
+  mat <- x$getmat()
+  inv <- solve(mat)
+  x$setinv(inv)
+  inv
+  ## Return a matrix that is the inverse of 'x'
 }
